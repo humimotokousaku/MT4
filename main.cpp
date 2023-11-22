@@ -1,4 +1,5 @@
 #include <Novice.h>
+#include "MyMath.h"
 
 const char kWindowTitle[] = "LE2B_16_フミモト_コウサク";
 
@@ -11,6 +12,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
+
+	Vector3 axis = Normalize({ 1,1,1 });
+	float angle = 0.44f;
+	Matrix4x4 rotateMatrix = MakeRotateAxisAngle(axis, angle);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -32,6 +37,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
+		MatrixScreenPrintf(0,0,rotateMatrix,"rotateMatrix");
 
 		///
 		/// ↑描画処理ここまで
