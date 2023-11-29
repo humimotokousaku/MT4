@@ -9,6 +9,9 @@ struct Matrix3x3 {
 // 加算
 Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2);
 
+// 積
+Vector3 Multiply(const Vector3& v1, const Vector3& v2);
+
 // スカラー倍
 Vector3 Multiply(const Vector3& m, float scale);
 
@@ -36,3 +39,5 @@ Vector3 Project(const Vector3& v1, const Vector3& v2);
 Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle);
 
 void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label);
+
+Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);

@@ -10,12 +10,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Novice::Initialize(kWindowTitle, 1280, 720);
 
 	// キー入力結果を受け取る箱
-	char keys[256] = {0};
-	char preKeys[256] = {0};
+	char keys[256] = { 0 };
+	char preKeys[256] = { 0 };
 
-	Vector3 axis = Normalize({ 1,1,1 });
-	float angle = 0.44f;
-	Matrix4x4 rotateMatrix = MakeRotateAxisAngle(axis, angle);
+	Vector3 from0 = Normalize({ 1.0f,0.7f,0.5f });
+	Vector3 to0 = Multiply(from0, -1); 
+	Vector3 from1 = Normalize({ -0.6f,0.9f,0.2f });
+	Vector3 to1 = Normalize({ 0.4f,0.7f,-0.5f });
+
+	Matrix4x4 rotateMatrix0 = DirectionToDirection(Normalize(Vector3{ 1.0f,0.0f, 0.0f }), Normalize(Vector3{ -1.0f,0.0f, 0.0f }));
+	Matrix4x4 rotateMatrix1 = DirectionToDirection(from0, to0);
+	Matrix4x4 rotateMatrix2 = DirectionToDirection(from1, to1);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -37,7 +42,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-		MatrixScreenPrintf(0,0,rotateMatrix,"rotateMatrix");
+		MatrixScreenPrintf(0, 20, rotateMatrix0, "rotateMatrix0");
+		MatrixScreenPrintf(0, 20 + 20 * 5, rotateMatrix1, "rotateMatrix1");
+		MatrixScreenPrintf(0, 20 + 20 * 10, rotateMatrix2, "rotateMatrix2");
 
 		///
 		/// ↑描画処理ここまで

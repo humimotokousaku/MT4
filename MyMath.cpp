@@ -14,6 +14,16 @@ Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2) {
 	return result;
 };
 
+// 積
+Vector3 Multiply(const Vector3& v1, const Vector3& v2) {
+	Vector3 result{
+		(v1.x * v2.x) + (v1.y * v2.x) + (v1.z * v2.x),
+		(v1.x * v2.y) + (v1.y * v2.y) + (v1.z * v2.y),
+		(v1.x * v2.z) + (v1.y * v2.z) + (v1.z * v2.z)
+	};
+	return result;
+};
+
 // スカラー倍
 Vector3 Multiply(const Vector3& v1, float scale) {
 	Vector3 result;
@@ -115,9 +125,9 @@ Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle) {
 		0,0,cosf(angle),0,
 		0,0,0,1},
 
-		{1-cosf(angle),0,0,0,
-		0,1-cosf(angle),0,0,
-		0,0,1-cosf(angle),0,
+		{1 - cosf(angle),0,0,0,
+		0,1 - cosf(angle),0,0,
+		0,0,1 - cosf(angle),0,
 		0,0,0,1},
 	};
 	// 射影
@@ -127,7 +137,7 @@ Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle) {
 		axis.x * axis.z, axis.y * axis.z, axis.z * axis.z,0,
 		0,0,0,1
 	};
-	matP = Multiply( matS[1], matP);
+	matP = Multiply(matS[1], matP);
 
 	// 
 	Matrix4x4 matC = {
@@ -136,9 +146,9 @@ Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle) {
 		-axis.y,axis.x,0 , 0,
 		0,0,0,1
 	};
-	matC = Multiply(matC,- sinf(angle));
+	matC = Multiply(matC, -sinf(angle));
 
-	Matrix4x4 result = Add(matS[0],Add(matP, matC));
+	Matrix4x4 result = Add(matS[0], Add(matP, matC));
 	result.m[3][3] = 1;
 
 	return result;
@@ -151,4 +161,30 @@ void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label
 			Novice::ScreenPrintf(x + column * 60, y + row * 20, "%6.03f", matrix.m[row][column]);
 		}
 	}
+}
+
+Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to) {
+	// 正規化
+	Vector3 n;
+	// 真逆のベクトルかをチェック
+	float dotFrom2to = Dot(from,to);
+	// 正規化
+	n = Normalize(Cross(from, to));
+
+	// 真逆なら反転
+	if (dotFrom2to == -1) {
+		n = { n.y, -n.x, 0 };
+	}
+	
+	float cos = Dot(from, to);
+	float sin = Length(Cross(from, to));
+
+	Matrix4x4 result = {
+		n.x * n.x * (1 - cos) + cos,	   n.x * n.y * (1 - cos) + n.z * sin, n.x * n.z * (1 - cos) - n.y * sin,0,
+		n.x * n.y * (1 - cos) - n.z * sin, n.y * n.y * (1 - cos) + cos,		  n.y * n.z * (1 - cos) + n.x * sin,0,
+		n.x * n.z * (1 - cos) + n.y * sin, n.y * n.z * (1 - cos) - n.x * sin, n.z * n.z * (1 - cos) + cos,0,
+		0,0,0,1
+	};
+
+	return result;
 }
