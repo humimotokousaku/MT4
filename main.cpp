@@ -1,5 +1,7 @@
 #include <Novice.h>
 #include "MyMath.h"
+#include "Quaternion.h"
+#include "ImGuiManager.h"
 
 const char kWindowTitle[] = "LE2B_16_フミモト_コウサク";
 
@@ -13,14 +15,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = { 0 };
 	char preKeys[256] = { 0 };
 
-	Vector3 from0 = Normalize({ 1.0f,0.7f,0.5f });
-	Vector3 to0 = Multiply(from0, -1); 
-	Vector3 from1 = Normalize({ -0.6f,0.9f,0.2f });
-	Vector3 to1 = Normalize({ 0.4f,0.7f,-0.5f });
-
-	Matrix4x4 rotateMatrix0 = DirectionToDirection(Normalize(Vector3{ 1.0f,0.0f, 0.0f }), Normalize(Vector3{ -1.0f,0.0f, 0.0f }));
-	Matrix4x4 rotateMatrix1 = DirectionToDirection(from0, to0);
-	Matrix4x4 rotateMatrix2 = DirectionToDirection(from1, to1);
+	Quaternion p1 = { 2.0f,3.0f,4.0f,1.0f };
+	Quaternion p2 = { 1.0f,3.0f,5.0f,2.0f };
+	Quaternion identity = IdentituQuaternion();
+	Quaternion conj = Conjugate(p1);
+	Quaternion inv = Inverse(p1);
+	Quaternion normal = Normalize(p1);
+	Quaternion mul1 = Multiply(p1, p2);
+	Quaternion mul2 = Multiply(p2, p1);
+	float norm = Norm(p1);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -35,6 +38,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
+		ImGui::Begin("Quaternion");
+		ImGui::Text("Identity         : %f  %f  %f  %f", identity.x, identity.y, identity.z, identity.w);
+		ImGui::Text("Conjugate        : %f  %f  %f  %f", conj.x, conj.y, conj.z, conj.w);
+		ImGui::Text("Inverse          : %f  %f  %f  %f", inv.x, inv.y, inv.z, inv.w);
+		ImGui::Text("Normalize        : %f  %f  %f  %f", normal.x, normal.y, normal.z, normal.w);
+		ImGui::Text("Multiply(q1, q2) : %f  %f  %f  %f", mul1.x, mul1.y, mul1.z, mul1.w);
+		ImGui::Text("Multiply(q2, q1) : %f  %f  %f  %f", mul2.x, mul2.y, mul2.z, mul2.w);
+		ImGui::Text("Norm             : %f", norm);
+		ImGui::End();
+
 		///
 		/// ↑更新処理ここまで
 		///
@@ -42,9 +55,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-		MatrixScreenPrintf(0, 20, rotateMatrix0, "rotateMatrix0");
-		MatrixScreenPrintf(0, 20 + 20 * 5, rotateMatrix1, "rotateMatrix1");
-		MatrixScreenPrintf(0, 20 + 20 * 10, rotateMatrix2, "rotateMatrix2");
 
 		///
 		/// ↑描画処理ここまで
