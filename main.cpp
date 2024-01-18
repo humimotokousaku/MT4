@@ -1,6 +1,6 @@
 #include <Novice.h>
-#include "MyMath.h"
-#include "Quaternion.h"
+#include "Math/MyMath.h"
+#include "Math/Quaternion.h"
 #include "ImGuiManager.h"
 
 const char kWindowTitle[] = "LE2B_16_フミモト_コウサク";

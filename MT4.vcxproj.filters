@@ -14,6 +14,15 @@
     <Filter Include="KamataEngine\Adapter">
       <UniqueIdentifier>{c6468eb4-788b-4a83-b207-a5f4804e56c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{2b6b3f56-c641-49f3-a35e-0e72d696ccbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{23400d45-744b-4b3f-856a-5b7a32e0392e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitive">
+      <UniqueIdentifier>{5bb0f97c-be23-474b-97f5-3f5ab22ebf1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -38,11 +47,17 @@
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp">
       <Filter>KamataEngine\Source</Filter>
     </ClCompile>
-    <ClCompile Include="MyMath.cpp">
-      <Filter>KamataEngine</Filter>
+    <ClCompile Include="Collision\Collision.cpp">
+      <Filter>Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Quaternion.cpp">
-      <Filter>KamataEngine</Filter>
+    <ClCompile Include="Math\MyMath.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitive\Primitive.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Quaternion.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +132,17 @@
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h">
       <Filter>KamataEngine\Include</Filter>
     </ClInclude>
-    <ClInclude Include="MyMath.h" />
-    <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="Collision\Collision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MyMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Quaternion.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitive\Primitive.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
